@@ -767,5 +767,12 @@ RE:
 		goto RE;
 	}
 
+	if (score > bestScore) {
+		bestScore = score;
+		fout.open("SaveFile.txt");
+		fout << bestScore;
+		fout.close();
+	}
+
 	delete player;
 }
