@@ -1,3 +1,4 @@
+//20218한상수
 #pragma region include, namespace
 
 #include<iostream>
@@ -117,7 +118,7 @@ void setTone()  //음 설정
 	music.insert(pair<string, float>("높은 도", 1046.50));
 }
 
-void setShopPrice()
+void setShopPrice() //상점에서 누른 키에 해당하는 것이 얼마인지 정함
 {
 	charPrice.insert(pair<char, int>('s', 100));
 
@@ -161,7 +162,7 @@ void setMap(int x, int y)  //맵 형태 정함
 	}
 }
 
-void setInit(int x, int y)  //처음 세팅
+void setInit(int x, int y)  //처음 아이템 세팅
 {
 	for (int i = 0; i < y; i++)
 	{
@@ -202,7 +203,7 @@ void scolor(unsigned short text = 15, unsigned short back = 0)  //색 변경
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), text | (back << 4));
 }
 
-void shopMsg(string msg)
+void shopMsg(string msg) //상점 형태
 {
 	gotoxy(10, 10);
 	scolor(BLACK, BLUE);
@@ -211,7 +212,7 @@ void shopMsg(string msg)
 	scolor();
 }
 
-void shop(Player* p)
+void shop(Player* p)  //상점에서의 텍스트
 {
 	scolor(BLUE);
 	gotoxy(2, 6);
@@ -248,7 +249,7 @@ void shop(Player* p)
 	cout << "정지 허용 시간 증가(+1초)(T): 150코인";
 }
 
-void shopBuy(Player* p, char ch)
+void shopBuy(Player* p, char ch)  //상점에서 구매
 {
 	try
 	{
@@ -343,6 +344,7 @@ void gameInit()  //시작
 	cout << "9. ▲: 점수가 감점됩니다." << endl;
 	cout << "10. Ｘ: 코인을 일정량 잃습니다." << endl;
 	cout << "11. Θ: 남은 움직임 가능 횟수가 추가로 감소됩니다." << endl;
+	cout << "12. 같은 아이템을 중복으로 사용할 수 없습니다." << endl;
 
 	_getch();
 }
@@ -469,7 +471,7 @@ void mapDraw()  //맵 그리기
 	scolor();
 }
 
-void showScore()
+void showScore()  //점수 표시
 {
 	scolor(LIGHTBLUE);
 	gotoxy(3, 25);
@@ -499,7 +501,7 @@ void displayScreen(Player* p)  //화면 띄우기
 	if (moveCnt == 0)
 		gameOver("모든 이동 가능 횟수를 소모하였습니다.");
 
-	gotoxy(55, 20);
+	gotoxy(50, 20);
 }
 
 void game_reset() //리셋
@@ -635,19 +637,21 @@ void move(int dir, Player* p)  //움직임
 	}
 }
 
-void setConsoleView()
+void setConsoleView()  //게임 제목. 콘솔창
 {
 	system("title Wall Star");
 }
 
 int main()
 {
+	//기본 세팅
 	setConsoleView();
 	srand((unsigned int)time(NULL));
 	setTone();
 	setShopPrice();
 	gameInit();
 
+	//데이터(있으면) 불러오기
 	string savedStr;
 	int ab[7] = { 100,0,0,0,0,0,0 };
 	int n = 0;
@@ -670,14 +674,17 @@ int main()
 		fin.close();
 	}
 
-	Player* player = new Player(3, 3, ab[0], ab[1], ab[2], ab[3], ab[4], ab[5], ab[6]); //나중에 저장한 값 집어넣기
+	//플레이어 생성
+	Player* player = new Player(3, 3, ab[0], ab[1], ab[2], ab[3], ab[4], ab[5], ab[6]);
 
+	//여기부터 본격적인 시작
+	//화면 지우고 맵 형태결정
 RE:
 	clrscr();
 	setMap(MAPSIZE_X, MAPSIZE_Y);
 	setInit(MAPSIZE_X, MAPSIZE_Y);
 
-
+	//맵에 각종 장애물요소와 별 생성과 플레이어 이동 최대 수 넣기
 	moveCnt = player->movableCnt;
 	star(player, STARCOUNT, "★");
 	star(player, 3, "$");
@@ -689,31 +696,31 @@ RE:
 
 	while (!isGameEnd)
 	{
-		displayScreen(player);
+		displayScreen(player);  //화면
 		oldTime = clock();
-		ch = _getch();
+		ch = _getch();  //키입력
 
-		if (ch == 0xE0 || ch == 0)
+		if (ch == 0xE0 || ch == 0)  //방향키면
 		{
 			ch = _getch();
-			move(ch, player);
+			move(ch, player);  //움직임
 		}
 		else
 		{
 			ch = tolower(ch);
 
-			if (ch == ESC)
+			if (ch == ESC)  //종료
 			{
 				gameQuit();
 			}
-			else if (ch == 'v')
+			else if (ch == 'v')  //벽 1회 무시 사용
 			{
 				if (player->invinciCnt > 0 && !isInvin) {
 					player->invinciCnt--;
 					isInvin = true;
 				}
 			}
-			else if (ch == 't')
+			else if (ch == 't')  //정지 시간 증가
 			{
 				if (player->idleTimeCnt > 0 && !isIdle) {
 					player->idleTimeCnt--;
@@ -734,28 +741,28 @@ RE:
 	while (true)
 	{
 		clrscr();
-		shop(player);
+		shop(player);  //상점 띄우기
 		ch = _getch();
 		ch = tolower(ch);
 
-		if (ch == ESC)
+		if (ch == ESC)  //종료
 		{
 			isQuit = true;
 			gameQuit();
 			break;
 		}
-		else if (ch == 'g')
+		else if (ch == 'g')  //게임 재시작을 위해 브레이크
 		{
 			break;
 		}
 		else {
-			shopBuy(player, ch);
+			shopBuy(player, ch);  //구매
 		}
 	}
 
-	if (!isQuit)
+	if (!isQuit)  //게임 다시 시작
 	{
-		game_reset();
+		game_reset();  //리셋
 
 		goto RE;
 	}
