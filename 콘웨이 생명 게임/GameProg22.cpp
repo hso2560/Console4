@@ -1,8 +1,5 @@
 ﻿#include <iostream>
 #include <vector>
-#include<map>
-#include<time.h>
-#include<stdlib.h>
 #include<algorithm>
 #include "Console.h"
 using namespace std;
@@ -12,7 +9,7 @@ int Y = 10;
 string alive = "■";
 string death = "□";
 
-class Cell 
+class Cell
 {
 public:
 
@@ -20,7 +17,7 @@ public:
     bool isNextAlive = false;
     int x, y;
 
-    Cell(){}
+    Cell() {}
 
     Cell(int x, int y)
     {
@@ -50,18 +47,11 @@ void next();
 
 bool allDeath();
 
+void create();
+
 int main()
 {
-    for (int i = 0; i < Y; i++)
-    {
-        vector<Cell> v;
-        for (int j = 0; j < X; j++)
-        {
-            v.push_back(Cell(j, i));
-        }
-        cells.push_back(v);
-    }
-
+    create();
     init();
 
     while (!allDeath())
@@ -77,6 +67,18 @@ int main()
     sleep(5);
 }
 
+void create()
+{
+    for (int i = 0; i < Y; i++)
+    {
+        vector<Cell> v;
+        for (int j = 0; j < X; j++)
+        {
+            v.push_back(Cell(j, i));
+        }
+        cells.push_back(v);
+    }
+}
 
 void printCells()
 {
@@ -117,7 +119,7 @@ void next()
             {
                 cells[i][j].isNextAlive = true;
             }
-            else 
+            else
             {
                 cells[i][j].isNextAlive = false;
             }
@@ -128,22 +130,22 @@ void next()
 
     for (int i = 0; i < cells.size(); i++)
     {
-       /* for (int j = 0; j < cells[i].size(); j++)
-        {
-            cells[i][j].dead = !cells[i][j].isNextAlive;
-            cells[i][j].isNextAlive = false;
-        }*/
+        /* for (int j = 0; j < cells[i].size(); j++)
+         {
+             cells[i][j].dead = !cells[i][j].isNextAlive;
+             cells[i][j].isNextAlive = false;
+         }*/
 
         for_each(cells[i].begin(), cells[i].end(), [](Cell& c) {
             c.dead = !c.isNextAlive;
             c.isNextAlive = false;
-        });
+            });
     }
 }
 
 void checkAlive(int x, int y, int* count)
 {
-    if (*count > 3 || x >= X || y >= Y || x<0 || y<0) return;
+    if (*count > 3 || x >= X || y >= Y || x < 0 || y < 0) return;
 
     if (!cells[y][x].dead) (*count)++;
 }
