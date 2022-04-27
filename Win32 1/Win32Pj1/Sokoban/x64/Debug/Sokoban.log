@@ -1,0 +1,4 @@
+﻿  Sokoban.cpp
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Sokoban\Sokoban.cpp(332,18): warning C4244: '인수': 'WPARAM'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Sokoban\Sokoban.cpp(423,11): warning C4101: 'userMsg' :참조되지 않은 지역 변수입니다.
+  Sokoban.vcxproj -> F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\x64\Debug\Sokoban.exe

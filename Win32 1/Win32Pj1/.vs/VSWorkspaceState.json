@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\GDIProject",
-    "\\GDIProject2"
+    "\\GDIProject2",
+    "\\GDIProject3",
+    "\\Sokoban",
+    "\\WindowsProject1"
   ],
-  "SelectedNode": "\\Win32Pj1.sln",
+  "SelectedNode": "\\Sokoban\\Sokoban.cpp",
   "PreviewInSolutionExplorer": false
 }
