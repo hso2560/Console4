@@ -1,0 +1,44 @@
+﻿  Game.cpp
+  Player.cpp
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(19,43): error C2061: 구문 오류: 식별자 'Type'
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(26,10): error C3646: 'GetAround': 알 수 없는 재정의 지정자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(26,19): error C2059: 구문 오류: '('
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(26,48): error C2238: ';' 앞에 예기치 않은 토큰이 있습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(35,10): error C3646: '_board': 알 수 없는 재정의 지정자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(35,16): error C2143: 구문 오류: ','이(가) '[' 앞에 없습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(35,32): error C2238: ';' 앞에 예기치 않은 토큰이 있습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(36,16): error C2065: 'Player': 선언되지 않은 식별자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(36,5): error C2923: 'std::unique_ptr': 'Player'은(는) '_Ty' 매개 변수에 대한 올바른 템플릿 형식 인수가 아닙니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(36): message : 'Player' 선언을 참조하십시오.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(36,5): error C2976: 'std::unique_ptr': 템플릿 인수가 너무 적습니다.
+F:\Visual Studio 2022\VC\Tools\MSVC\14.31.31103\include\memory(3158): message : 'std::unique_ptr' 선언을 참조하십시오.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(41,16): error C3646: '_status': 알 수 없는 재정의 지정자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(41,23): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(45,11): error C3646: 'Shape': 알 수 없는 재정의 지정자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(45,16): error C2143: 구문 오류: ','이(가) '[' 앞에 없습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(45,28): error C2334: '{' 앞에 예기치 않은 토큰이 있습니다. 명백한 함수 본문을 건너뜁니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.cpp(37,20): error C2039: 'GetAround': 'Game'의 멤버가 아닙니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.h(5): message : 'Game' 선언을 참조하십시오.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.cpp(44,20): error C2039: 'GetAround': 'Game'의 멤버가 아닙니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.h(5): message : 'Game' 선언을 참조하십시오.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.cpp(52,20): error C2039: 'GetAround': 'Game'의 멤버가 아닙니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.h(5): message : 'Game' 선언을 참조하십시오.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.cpp(85,16): error C2039: 'GetAround': 'Game'의 멤버가 아닙니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.h(5): message : 'Game' 선언을 참조하십시오.
+  Tetris1.cpp
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.h(14,7): error C3646: 'GetBrickType': 알 수 없는 재정의 지정자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.h(14,19): error C2059: 구문 오류: '('
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Player.h(14,21): error C2238: ';' 앞에 예기치 않은 토큰이 있습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(19,43): error C2061: 구문 오류: 식별자 'Type'
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(26,10): error C3646: 'GetAround': 알 수 없는 재정의 지정자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(26,19): error C2059: 구문 오류: '('
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(26,48): error C2238: ';' 앞에 예기치 않은 토큰이 있습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(35,10): error C3646: '_board': 알 수 없는 재정의 지정자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(35,16): error C2143: 구문 오류: ','이(가) '[' 앞에 없습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(35,32): error C2238: ';' 앞에 예기치 않은 토큰이 있습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(41,16): error C3646: '_status': 알 수 없는 재정의 지정자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(41,23): error C4430: 형식 지정자가 없습니다. int로 가정합니다. 참고: C++에서는 기본 int를 지원하지 않습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(45,11): error C3646: 'Shape': 알 수 없는 재정의 지정자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(45,16): error C2143: 구문 오류: ','이(가) '[' 앞에 없습니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris1\Game.h(45,28): error C2334: '{' 앞에 예기치 않은 토큰이 있습니다. 명백한 함수 본문을 건너뜁니다.
+  코드를 생성하고 있습니다...

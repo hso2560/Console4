@@ -1,0 +1,4 @@
+﻿  Game.cpp
+F:\Visual Studio Project\C, C++\FindPair\FindPair\Game.cpp(15,22): warning C4244: '인수': 'ULONGLONG'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+F:\Visual Studio Project\C, C++\FindPair\FindPair\Game.cpp(167,31): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  FindPair.vcxproj -> F:\Visual Studio Project\C, C++\FindPair\x64\Debug\FindPair.exe

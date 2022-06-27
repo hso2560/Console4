@@ -140,11 +140,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="MoveInfo.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Sokoban.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="MoveInfo.cpp" />
     <ClCompile Include="Sokoban.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +164,8 @@
     <Image Include="pack.bmp" />
     <Image Include="small.ico" />
     <Image Include="Sokoban.ico" />
+    <Image Include="IDB_SHEET" />
+    <Image Include="sokoban_sheet_noShadow_32x32.bmp" />
     <Image Include="target.bmp" />
     <Image Include="wall.bmp" />
   </ItemGroup>

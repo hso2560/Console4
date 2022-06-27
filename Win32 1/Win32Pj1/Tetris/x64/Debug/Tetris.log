@@ -1,0 +1,10 @@
+﻿  Game.cpp
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris\Tetris.h(26,19): error C2065: 'Shape': 선언되지 않은 식별자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris\Tetris.h(26,35): error C2065: 'Shape': 선언되지 않은 식별자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris\Tetris.h(27,1): error C2056: 식이 잘못되었습니다.
+  Player.cpp
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris\Tetris.h(26,19): error C2065: 'Shape': 선언되지 않은 식별자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris\Tetris.h(26,35): error C2065: 'Shape': 선언되지 않은 식별자입니다.
+F:\Visual Studio Project\Console4gh\Win32 1\Win32Pj1\Tetris\Tetris.h(27,1): error C2056: 식이 잘못되었습니다.
+  Tetris.cpp
+  코드를 생성하고 있습니다...

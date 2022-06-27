@@ -6,85 +6,6 @@
 
 #define MAX_LOADSTRING 100
 
-#define MAX_STAGE 3
-#define BW 32
-#define BH 32
-
-void DrawScreen(HDC hdc, PAINTSTRUCT& ps);
-BOOL TestEnd();
-void Move(int dir);
-void InitStage();
-void DrawBitmap(HDC hdc, int x, int y, HBITMAP hBit);
-
-char ns[18][21];
-int nStage;
-int nx, ny;
-int nMove;
-HBITMAP hBitArr[5];
-
-char arStage[MAX_STAGE][18][21] = {
-    {
-    "####################",
-    "####################",
-    "####################",
-    "#####   ############",
-    "#####O  ############",
-    "#####  O############",
-    "###  O O ###########",
-    "### # ## ###########",
-    "#   # ## #####  ..##",
-    "# O  O   @      ..##",
-    "##### ### # ##  ..##",
-    "#####     ##########",
-    "####################",
-    "####################",
-    "####################",
-    "####################",
-    "####################",
-    "####################"
-    },
-    {
-    "####################",
-    "####################",
-    "####################",
-    "####################",
-    "####..  #     ######",
-    "####..  # O  O  ####",
-    "####..  #O####  ####",
-    "####..    @ ##  ####",
-    "####..  # #  O #####",
-    "######### ##O O ####",
-    "###### O  O O O ####",
-    "######    #     ####",
-    "####################",
-    "####################",
-    "####################",
-    "####################",
-    "####################",
-    "####################"
-    },
-    {
-    "####################",
-    "####################",
-    "####################",
-    "####################",
-    "##########     @####",
-    "########## O#O #####",
-    "########## O  O#####",
-    "###########O O #####",
-    "########## O # #####",
-    "##....  ## O  O  ###",
-    "###...    O  O   ###",
-    "##....  ############",
-    "####################",
-    "####################",
-    "####################",
-    "####################",
-    "####################",
-    "####################"
-    },
-};
-
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -166,24 +87,12 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     return RegisterClassExW(&wcex);
 }
 
-//
-//   함수: InitInstance(HINSTANCE, int)
-//
-//   용도: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
-//
-//   주석:
-//
-//        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
-//        주 프로그램 창을 만든 다음 표시합니다.
-//
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, 800, 600, nullptr, nullptr, hInstance, nullptr);
-   
-   hWndMain = hWnd;
 
    if (!hWnd)
    {
@@ -206,12 +115,13 @@ enum class BlockType {
     BLUE
 };
 
-
+Game* game = nullptr;
+bool gameEnd = false;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    //static HBITMAP hBit;
-    //static BITMAP bit;
+    static HBITMAP hBit;
+    static BITMAP bit;
 
     /*static int ix, iy;
     static int nWidth, nHeight;
@@ -231,12 +141,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
         SetWindowPos(hWnd, NULL, 0, 0, rtClient.right - rtClient.left, rtClient.bottom - rtClient.top, SWP_NOMOVE | SWP_NOZORDER);
 
-        for (int i = 0; i < 5; i++)
+        game = new Game(hWnd, hInst);
+        game->InitStage();
+        
+        hBit = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_MAN));
+        /*for (int i = 0; i < 5; i++)
         {
             hBitArr[i] = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_EMPTY + i));
         }
         nStage = 0;
-        InitStage();
+        InitStage();*/
 
         /*hBit = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP2));
 
@@ -275,7 +189,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
-            DrawScreen(hdc, ps);
+            
+
+            if (gameEnd) {
+                HDC memDC = CreateCompatibleDC(hdc);
+                HBITMAP hOldBit = static_cast<HBITMAP>(SelectObject(memDC, hBit));
+
+                GetObject(hBit, sizeof(BITMAP), &bit);
+
+                BitBlt(hdc, 200, 200, bit.bmWidth, bit.bmHeight, memDC, 0, 0, SRCCOPY);
+
+                SelectObject(memDC, hOldBit);
+                DeleteObject(hWnd);
+            }
+            else {
+                game->DrawScreen(hdc, ps);
+            }
+
+           
+
+            //DrawScreen(hdc, ps);
 
             /*HDC memDC = CreateCompatibleDC(hdc);
             HBITMAP hOldBit = static_cast<HBITMAP>(SelectObject(memDC, hBit));
@@ -329,33 +262,79 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         case VK_RIGHT:
         case VK_UP:
         case VK_DOWN:
-            Move(wParam);
-            if (TestEnd())
+            game->Move(wParam);
+            if (game->TestEnd())
             {
-                wsprintf(userMsg, _T("%d 스테이지를 풀었습니다")_T("다음 스테이지로 이동합니다"), nStage+1);
-                MessageBox(hWnd, userMsg, _T("알림"), MB_OK);
-                if (nStage < MAX_STAGE - 1) {
+                
+                /*if (nStage < MAX_STAGE - 1) {
                     nStage++;
                 }
-                InitStage();
+                InitStage();*/
+                if (game->GotoNextStage()) {
+                    wsprintf(userMsg, _T("%d 스테이지를 풀었습니다")_T("다음 스테이지로 이동합니다"), game->GetCurrentStage());
+                }
+                else {
+                    wsprintf(userMsg, _T("모든 스테이지를 클리어했습니다."));
+                    
+                }
+                MessageBox(hWnd, userMsg, _T("알림"), MB_OK);
             }
             break;
         case 'Q':
             DestroyWindow(hWnd);
             break;
         case 'R':
-            InitStage();
+            game->InitStage();
             break;
+        case 'N':
+            game->GotoNextStage();
+            break;
+        case 'P':
+            game->GotoPrevStage();
+            break;
+        case 'Z':
+            //undo => 이거에 맞춰서 안내문자도 => 오른쪽 위
+            game->Undo();
+            break;
+        case 'X':
+            game->Redo();
+            //redo
+            break;
+
+        case 'T':
+            
+            game->TestClear();
+
+            TCHAR userMsg[256];
+            
+            if (game->GetCurrentStage() < MAX_STAGE - 1)
+            {
+                wsprintf(userMsg, _T("%d 스테이지를 풀었습니다")_T("다음 스테이지로 이동합니다"), game->GetCurrentStage());
+                
+            }
+            else
+            {
+                wsprintf(userMsg, _T("모든 스테이지를 클리어했습니다."));
+            }
+            
+            MessageBox(hWnd, userMsg, _T("알림"), MB_OK);
+            game->InitStage();
+            if (game->GetCurrentStage() < MAX_STAGE)
+            {
+            }
+            else {
+                gameEnd = true;
+            }
+            
+            break;
+
         default:
             break;
         }
         break;
     case WM_DESTROY:
 
-        for (int i = 0; i < 5; i++)
-        {
-            DeleteObject(hBitArr[i]);
-        }
+        delete game;
 
        /* DeleteObject(hRedBrush);
         DeleteObject(hBlueBrush);*/
@@ -365,89 +344,4 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
     return 0;
-}
-
-void DrawBitmap(HDC hdc, int x, int y, HBITMAP hBit)
-{
-    HDC hMemDC;
-    HBITMAP hOldBitMap;
-    int bx, by;
-    BITMAP bit;
-
-    hMemDC = CreateCompatibleDC(hdc);
-    hOldBitMap = static_cast<HBITMAP>(SelectObject(hMemDC, hBit));
-
-    GetObject(hBit, sizeof(BITMAP), &bit);
-
-    bx = bit.bmWidth;
-    by = bit.bmHeight;
-
-    BitBlt(hdc, x, y, bx, by, hMemDC, 0, 0, SRCCOPY);
-    SelectObject(hMemDC, hOldBitMap);
-    DeleteDC(hMemDC);
-}
-
-void InitStage()
-{
-    memcpy(ns, arStage[nStage], sizeof(ns));
-
-    for (int y = 0; y < 18; y++)
-    {
-        for (int x = 0; x < 20; x++) {
-            if (ns[y][x] == '@')
-            {
-                nx = x;
-                ny = y;
-                ns[y][x] = ' ';
-            }
-        }
-    }
-
-    nMove = 0;
-    InvalidateRect(hWndMain, NULL, TRUE);
-}
-
-BOOL TestEnd()
-{
-    return FALSE;
-}
-
-void Move(int dir)
-{
-
-}
-
-void DrawScreen(HDC hdc, PAINTSTRUCT& ps)
-{
-    int iBit = 1;
-    TCHAR userMsg[256];
-    //EMPTY, MAN, PACK, TARGET, WALL
-    for (int y = 0; y < 18; y++)
-    {
-        for (int x = 0; x < 20; x++)
-        {
-            switch (ns[y][x])
-            {
-            case '#':
-                iBit = 4;
-                break;
-                
-            case '.':
-                iBit = 3;
-                break;
-            case 'O':
-                iBit = 2;
-                break;
-            case ' ':
-                iBit = 0;
-                break;
-
-            default:
-                break;
-            }
-
-            DrawBitmap(hdc, x * BW, y * BH, hBitArr[iBit]);
-        }
-    }
-    DrawBitmap(hdc, nx * BW, ny * BH, hBitArr[1]);
 }
